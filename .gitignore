@@ -1,0 +1,4 @@
+private.key
+public.crt
+.env
+*.bck
