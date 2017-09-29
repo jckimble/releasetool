@@ -179,10 +179,15 @@ func (g *GitHub) CreateRelease(release *github.RepositoryRelease) error {
 	return nil
 }
 func (g *GitHub) UploadAsset(filename string, data []byte) error {
-	u := fmt.Sprintf("repos/%s/%s/releases/%d/assets", g.user, g.repo, g.ReleaseId)
+	u := fmt.Sprintf("repos/%s/%s/releases/%d/assets?name=%s", g.user, g.repo, g.ReleaseId, filename)
 	mediaType := mime.TypeByExtension(filepath.Ext(filename))
 	reader := bytes.NewReader(data)
-	_, err := g.client.NewUploadRequest(u, reader, int64(len(data)), mediaType)
+	req, err := g.client.NewUploadRequest(u, reader, int64(len(data)), mediaType)
+	if err != nil {
+		return err
+	}
+	asset := new(github.ReleaseAsset)
+	_, err = g.client.Do(context.Background(), req, asset)
 	if err != nil {
 		return err
 	}
