@@ -26,7 +26,7 @@ type Assets struct {
 	Signature string
 }
 
-func (u *WebDirectory) getCert() string {
+func (u *WebDirectory) GetCert() string {
 	return u.Certificate
 }
 
@@ -51,7 +51,7 @@ func (u *WebDirectory) CheckUpdateAvailable() (string, error) {
 	}
 	return "", nil
 }
-func (u *WebDirectory) getAssets() (string, string, string, error) {
+func (u *WebDirectory) GetAssets() (string, string, string, error) {
 	for _, asset := range u.VersionJson.Assets {
 		if asset.Platform == platform {
 			if asset.Binary == "" {

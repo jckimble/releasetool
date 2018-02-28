@@ -27,12 +27,12 @@ var (
 
 type UpdaterService interface {
 	CheckUpdateAvailable() (string, error)
-	getAssets() (string, string, string, error)
-	getCert() string
+	GetAssets() (string, string, string, error)
+	GetCert() string
 }
 
 func Update(u UpdaterService) error {
-	binary, checksum, signature, err := u.getAssets()
+	binary, checksum, signature, err := u.GetAssets()
 	if err != nil {
 		return err
 	}
@@ -49,7 +49,7 @@ func Update(u UpdaterService) error {
 		Checksum: checksumParsed,
 		Hash:     crypto.SHA256,
 	}
-	cert := u.getCert()
+	cert := u.GetCert()
 	if cert != "" {
 		opts.PublicKey, err = getPublicKey(cert)
 		if err != nil {

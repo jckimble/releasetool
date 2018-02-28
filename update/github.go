@@ -15,7 +15,7 @@ type GitHub struct {
 	latestReleasesResp *github.RepositoryRelease
 }
 
-func (u *GitHub) getCert() string {
+func (u *GitHub) GetCert() string {
 	return u.Certificate
 }
 
@@ -40,7 +40,7 @@ func (u *GitHub) CheckUpdateAvailable() (string, error) {
 
 	return "", nil
 }
-func (u *GitHub) getAssets() (string, string, string, error) {
+func (u *GitHub) GetAssets() (string, string, string, error) {
 	reqFilename := u.GithubRepo + "-" + platform
 	var binaryAsset, checksumAsset, signatureAsset github.ReleaseAsset
 	for _, asset := range u.latestReleasesResp.Assets {
